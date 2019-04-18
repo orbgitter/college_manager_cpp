@@ -8,6 +8,8 @@ const int NUM_OF_ARGUMENTS = 4;
 
 int main(int argc, char** argv){
 
+	// Here we put all our tests:
+
 	//Student* s = new Student("moshe", "levi", 453535, "herzel 35 ta", 2019);
 	//Student* s2 = new Student("moshe", "levi", 453535, "herzel 35 ta", 2019);
 
