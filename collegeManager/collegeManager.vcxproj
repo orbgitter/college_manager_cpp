@@ -71,6 +71,7 @@
     <ClCompile Include="InitFileParser.cpp" />
     <ClCompile Include="RefCount.cpp" />
     <ClCompile Include="SharedPointer.cpp" />
+    <ClCompile Include="SimulationFileParser.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="StudentCycle.cpp" />
   </ItemGroup>
@@ -81,6 +82,7 @@
     <ClInclude Include="InitFileParser.h" />
     <ClInclude Include="RefCount.h" />
     <ClInclude Include="SharedPointer.h" />
+    <ClInclude Include="SimulationFileParser.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="StudentCycle.h" />
   </ItemGroup>

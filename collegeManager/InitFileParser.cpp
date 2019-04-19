@@ -6,12 +6,13 @@ InitFileParser::InitFileParser(string _fileName) : fileName(_fileName) {
 
 bool InitFileParser::readFile() {
 
+	bool result = true;
+
 	string line;
 
 	const string collegeLinePrefix = "College:";
 	const string departmentLinePrefix = "Departments:";
-
-	const string delimiter = ",";
+	const char delimiter = ',';
 
 	list<Department*> departments;
 
@@ -34,7 +35,7 @@ bool InitFileParser::readFile() {
 			std::stringstream stringStream(departmentNames);
 			while (stringStream.good()) {
 
-				getline(stringStream, departmentName, ',');
+				getline(stringStream, departmentName, delimiter);
 
 				Department* department = new Department(departmentName);
 
@@ -52,11 +53,12 @@ bool InitFileParser::readFile() {
 		}
 
 		else {
-			return false;
+			result = false;
+			break;
 		}
 	}
-
-	return true;
+	file.close();
+	return result;
 }
 
 College* InitFileParser::getCollege() {
