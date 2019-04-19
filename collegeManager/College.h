@@ -8,13 +8,15 @@
 class College{
 private:
 	std::string name;
-	std::list<Department> departments;
+	std::list<Department*> departments;
 	std::list<Course> allCourses;
 	std::list<StudentCycle> studentCycles;
 
 public:
 	College(std::string _name);
+	std::string getName() const;
 
+	void addDepartment(Department* department);
 };
 
 

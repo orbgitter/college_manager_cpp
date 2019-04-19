@@ -68,6 +68,7 @@
     <ClCompile Include="College.cpp" />
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="Department.cpp" />
+    <ClCompile Include="InitFileParser.cpp" />
     <ClCompile Include="RefCount.cpp" />
     <ClCompile Include="SharedPointer.cpp" />
     <ClCompile Include="Student.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="College.h" />
     <ClInclude Include="Course.h" />
     <ClInclude Include="Department.h" />
+    <ClInclude Include="InitFileParser.h" />
     <ClInclude Include="RefCount.h" />
     <ClInclude Include="SharedPointer.h" />
     <ClInclude Include="Student.h" />

@@ -1,12 +1,23 @@
 #include <iostream>
 #include "Student.h"
-#include "SharedPointer.h"
-
+//#include "SharedPointer.h"
+#include "InitFileParser.h"
+#include <windows.h>
 using namespace std;
 
 const int NUM_OF_ARGUMENTS = 4;
 
+string ExePath() {
+	char buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, MAX_PATH);
+	string::size_type pos = string(buffer).find_last_of("\\/");
+	return string(buffer).substr(0, pos);
+}
+
+
 int main(int argc, char** argv){
+
+	//cout << "my directory is " << ExePath().c_str() << "\n";
 
 	// Here we put all our tests:
 
@@ -19,6 +30,21 @@ int main(int argc, char** argv){
 	//cout << "Counter = " << studentPtr.getCounter() << endl;
 
 	//studentPtr
+
+	std::string initFilename = "C:\\Users\\Asus\\Documents\\Visual Studio 2013\\Projects\\collegeManager\\collegeManager\\Debug\\init.txt";
+	std::string simulationFilename = "simulation.txt";
+	std::string outputFilename = "output.txt";
+	
+	InitFileParser initFileParser(initFilename);
+	bool result = initFileParser.readFile();
+	if (result == false) {
+		cerr << "File is not found or is not in the correct format\n";
+		return 0;
+	}
+
+	College* collegePtr = initFileParser.getCollege();
+	
+	cout << "College name is " << collegePtr->getName();
 
 	//if (argc != NUM_OF_ARGUMENTS) {
 	//	cerr << "Expected 3 arguments: init filename, simulation filename, output filename" << endl;
