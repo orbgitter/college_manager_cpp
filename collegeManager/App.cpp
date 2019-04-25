@@ -34,11 +34,12 @@ int main(int argc, char** argv){
 	std::string initFilename = "C:\\Users\\Asus\\Documents\\Visual Studio 2013\\Projects\\collegeManager\\collegeManager\\Debug\\init.txt";
 	std::string simulationFilename = "simulation.txt";
 	std::string outputFilename = "output.txt";
-	
+	std::string errorMessage;
 	InitFileParser initFileParser(initFilename);
-	bool result = initFileParser.readFile();
+	bool result = initFileParser.readFile(errorMessage);
 	if (result == false) {
-		cerr << "File is not found or is not in the correct format\n";
+		cout << "File is not found or is not in the correct format:\n" << errorMessage;
+		getchar();
 		return 0;
 	}
 

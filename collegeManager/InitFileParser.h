@@ -4,7 +4,8 @@
 #include <fstream>
 #include <sstream>
 #include <list>
-#include <map> 
+#include <map>
+#include <vector>
 #include "College.h"
 
 using namespace std;
@@ -18,7 +19,7 @@ private:
 
 public:
 	InitFileParser(string _fileName);
-	bool readFile();
+	bool readFile(string& errorMessage);
 	College* getCollege();
 
 };

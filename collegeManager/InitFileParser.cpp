@@ -5,7 +5,7 @@ InitFileParser::InitFileParser(string _fileName) : fileName(_fileName) {
 
 }
 
-bool InitFileParser::readFile() {
+bool InitFileParser::readFile(string& errorMessage) {
 
 	bool result = true;
 
@@ -18,7 +18,7 @@ bool InitFileParser::readFile() {
 	const string courseDetailsLinePrefix = "CourseDetails:";
 	const char delimiter = ',';
 
-	list<Department*> departments;
+	map<string, Department*> departments;
 	list<Course*> courses;
 	map<int, Course*> allCourses;
 	/* list<Course*> courseDetails; */
@@ -31,7 +31,7 @@ bool InitFileParser::readFile() {
 		if (line.at(0) == '#') {
 			continue;
 		}
-		cout << line << endl;
+		//cout << line << endl;
 
 		if (line.rfind(collegeLinePrefix, 0) == 0) {
 			string collegeName = line.substr(collegeLinePrefix.size());
@@ -47,7 +47,7 @@ bool InitFileParser::readFile() {
 
 				Department* department = new Department(departmentName);
 
-				departments.push_back(department);
+				departments.insert(pair<string, Department*>(departmentName, department));
 				collegePtr->addDepartment(department);
 			}
 		}
@@ -68,9 +68,36 @@ bool InitFileParser::readFile() {
 		}
 
 		else if (line.rfind(courseDetailsLinePrefix, 0) == 0) {
+			string courseDetailsAsString = line.substr(courseDetailsLinePrefix.size());
 
+			string detailToken;
+			std::stringstream stringStream(courseDetailsAsString);
+			vector<string> detailTokens;
+			while (stringStream.good()) {
+
+				getline(stringStream, detailToken, delimiter);
+
+				//cout << "detailToken = " << detailToken << endl;
+
+				detailTokens.push_back(detailToken);
+			}
+
+			if (detailTokens.size() != 4) {
+				errorMessage = "Arguments for CourseDetails should be exactly 4.\nThe line is:\n" + line;
+				return false;
+			}
+
+			int courseId = std::stoi(detailTokens[0] , nullptr, 0);
+			string departmentName = detailTokens[1];
+			int creditPoints = std::stoi(detailTokens[2], nullptr, 0);
+			string courseName = detailTokens[3];
+
+			Course* course = new Course(courseId, courseName, creditPoints);
+			if (collegePtr->addCourse(departmentName, *course) == false) {
+				errorMessage = "Department name is not exists: " + departmentName;
+				return false;
+			}
 		}
-
 		else {
 			result = false;
 			break;

@@ -7,13 +7,13 @@
 class Course{
 private:
 	std::string name;
-	long id;
+	int id;
 	int creditPoints;
 	std::list<Student> students;
 
 public:
-
-	Course(long _id, std::string _name, int _creditPoints);
+	inline int getId() const { return id; }
+	Course(int _id, std::string _name, int _creditPoints);
 
 };
 
