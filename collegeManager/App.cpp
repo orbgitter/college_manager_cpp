@@ -2,6 +2,7 @@
 #include "Student.h"
 //#include "SharedPointer.h"
 #include "InitFileParser.h"
+#include "SimulationFileParser.h"
 #include <windows.h>
 using namespace std;
 
@@ -32,20 +33,28 @@ int main(int argc, char** argv){
 	//studentPtr
 
 	std::string initFilename = "C:\\Users\\Asus\\Documents\\Visual Studio 2013\\Projects\\collegeManager\\collegeManager\\Debug\\init.txt";
-	std::string simulationFilename = "simulation.txt";
+	std::string simulationFilename = "C:\\Users\\Asus\\Documents\\Visual Studio 2013\\Projects\\collegeManager\\collegeManager\\Debug\\simulation.txt";
 	std::string outputFilename = "output.txt";
 	std::string errorMessage;
 	InitFileParser initFileParser(initFilename);
 	bool result = initFileParser.readFile(errorMessage);
 	if (result == false) {
-		cout << "File is not found or is not in the correct format:\n" << errorMessage;
+		cout << "File " << initFilename << " is not found or is not in the correct format:\n" << errorMessage;
 		getchar();
 		return 0;
 	}
 
 	College* collegePtr = initFileParser.getCollege();
+
+	SimulationFileParser simulationFileParser(simulationFilename, collegePtr);
+	simulationFileParser.readFileAndExecute(errorMessage);
+	if (result == false) {
+		cout << "File " << simulationFilename << " is not found or is not in the correct format : \n" << errorMessage;
+		getchar();
+		return 0;
+	}
 	
-	cout << "College name is " << collegePtr->getName();
+	//cout << "College name is " << collegePtr->getName();
 
 	//if (argc != NUM_OF_ARGUMENTS) {
 	//	cerr << "Expected 3 arguments: init filename, simulation filename, output filename" << endl;

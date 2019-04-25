@@ -15,7 +15,6 @@ private:
 	string fileName;
 	ifstream file;
 	College* collegePtr;
-	Course* coursePtr;
 
 public:
 	InitFileParser(string _fileName);

@@ -28,7 +28,7 @@ bool InitFileParser::readFile(string& errorMessage) {
 
 	while (getline(file, line)) {
 		
-		if (line.at(0) == '#') {
+		if (line.empty() || line.at(0) == '#') {
 			continue;
 		}
 		//cout << line << endl;
