@@ -18,6 +18,7 @@ private:
 public:
 	Department(std::string _name);
 
+	void addCourse(Course& course);
 };
 
 

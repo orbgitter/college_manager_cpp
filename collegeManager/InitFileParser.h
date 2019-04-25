@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <list>
+#include <map> 
 #include "College.h"
 
 using namespace std;
@@ -13,6 +14,7 @@ private:
 	string fileName;
 	ifstream file;
 	College* collegePtr;
+	Course* coursePtr;
 
 public:
 	InitFileParser(string _fileName);

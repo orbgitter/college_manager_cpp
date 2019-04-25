@@ -1,4 +1,5 @@
 #include "InitFileParser.h"
+#include <iterator>
 
 InitFileParser::InitFileParser(string _fileName) : fileName(_fileName) {
 
@@ -12,9 +13,16 @@ bool InitFileParser::readFile() {
 
 	const string collegeLinePrefix = "College:";
 	const string departmentLinePrefix = "Departments:";
+	const string collegeCoursesListLinePrefix = "CollageCoursesList:";  //Note there's a typo in the init.txt file by writing college as collAge 
+	const string coursesDetailsLinePrefix = "CoursesDetails:";
+	const string courseDetailsLinePrefix = "CourseDetails:";
 	const char delimiter = ',';
 
 	list<Department*> departments;
+	list<Course*> courses;
+	map<int, Course*> allCourses;
+	/* list<Course*> courseDetails; */
+
 
 	file.open(fileName);
 
@@ -44,11 +52,22 @@ bool InitFileParser::readFile() {
 			}
 		}
 
-		else if (line.rfind("CollageCoursesList:", 0) == 0) {
+		else if (line.rfind(collegeCoursesListLinePrefix, 0) == 0) {
+			string courseIdAsStrings = line.substr(collegeCoursesListLinePrefix.size());
+			string courseIdAsString;
+			std::stringstream stringStream(courseIdAsStrings);
+			while (stringStream.good()) {
 
+				getline(stringStream, courseIdAsString, delimiter);
+				//cout << "courseIdAsString = " << courseIdAsString << endl;
+
+				int courseId = std::stoi(courseIdAsString, nullptr, 0);
+				//cout << "courseId = " << courseId << endl;
+				allCourses.insert(pair<int, Course*>(courseId, NULL));
+			}
 		}
 
-		else if (line.rfind("CourseDetails:", 0) == 0) {
+		else if (line.rfind(courseDetailsLinePrefix, 0) == 0) {
 
 		}
 
