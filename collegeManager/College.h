@@ -19,6 +19,7 @@ public:
 	bool addCourse(std::string departmentName, Course& course);
 	void addDepartment(Department* department);
 	Course* getCourseById(int courseId);
+	Department* getDepartmentByName(std::string name);
 };
 
 

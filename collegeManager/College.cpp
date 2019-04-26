@@ -25,3 +25,7 @@ bool College::addCourse(std::string departmentName, Course& course) {
 Course* College::getCourseById(int courseId) {
 	return allCourses[courseId];
 }
+
+Department* College::getDepartmentByName(std::string name) {
+	return departments[name];
+}

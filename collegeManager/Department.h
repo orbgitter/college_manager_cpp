@@ -19,8 +19,9 @@ public:
 	Department(std::string _name);
 
 	void addCourse(Course& course);
-
+	void addStudent(Student& student);
 	inline std::string getName() const { return name; };
+	
 
 };
 

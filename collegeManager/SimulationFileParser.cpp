@@ -9,10 +9,12 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 
 	bool result = true;
 
-	string line, token;
-	int currentIndex = 0, courseId = 0;
+	string line, token, studentFirstName, studentLastName, studentId, studentAddress, studentDepartmentName;
+	int currentIndex = 0, courseId = 0, studentStartYear = 0;
 	const char delimiter = ',';
 	Course* coursePtr = NULL;
+	Department* departmentPtr = NULL;
+	Student* studentPtr = NULL;
 	file.open(fileName);
 
 	while (getline(file, line)) {
@@ -41,6 +43,31 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 		cout << operationId << endl;
 		switch (operationId) {
 		case 1:
+			if (tokensForOneLine.size() != 7) {
+				cout << "Format for opeartion 1 is not correct:\n" << line << endl;
+				continue;
+			}
+			studentFirstName = tokensForOneLine[1];
+			studentLastName = tokensForOneLine[2];
+			studentId = tokensForOneLine[3];
+			studentAddress = tokensForOneLine[4];
+			studentStartYear = stoi(tokensForOneLine[5]);
+			studentDepartmentName = tokensForOneLine[6];
+
+			departmentPtr = collegePtr->getDepartmentByName(studentDepartmentName);
+			if (departmentPtr == NULL) {
+				cout << "Department is not found in college: " << studentDepartmentName << endl;
+				continue;
+			}
+
+			studentPtr = new Student(studentFirstName, studentLastName, studentId, studentAddress, studentStartYear, departmentPtr);
+			departmentPtr->addStudent(*studentPtr);
+
+			// Find the relevant StudentCycle in college
+			// If it exists - add this student to this cycle
+			// Else - create a student cycle and add the student to this cycle
+			// Note: need to convert the student cycle list in college to Map: Key is the StartYear, Value is the StudentCycle
+
 			break;
 		case 2:
 			break;
@@ -55,8 +82,11 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 		case 7:
 			break;
 		case 8:
+			if (tokensForOneLine.size() != 2) {
+				cout << "Format for opeartion 8 is not correct:\n" << line << endl;
+				continue;
+			}
 			courseId = stoi(tokensForOneLine[1]);
-			cout << "course id: " << courseId << endl;
 			coursePtr = collegePtr->getCourseById(courseId);
 			if (coursePtr == NULL) {
 				cout << "Course is not found in college: " << courseId << endl;
