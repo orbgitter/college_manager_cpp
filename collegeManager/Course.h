@@ -1,10 +1,7 @@
 #ifndef COURSE_H
 #define COURSE_H
 #include <iostream>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <list>
+#include <vector>  //vector unlike List, allows us to work with [] !!!!!
 #include "Student.h"
 
 class Course{
@@ -12,13 +9,14 @@ private:
 	std::string name;
 	int id;
 	int creditPoints;
-	std::list<Student> students;
+	std::vector<Student> students;
 
 public:
-	void printCourseDetailsForStartYear(int collegeStartYear);
-	inline int getId() const { return id; }
 	Course(int _id, std::string _name, int _creditPoints);
-
+	friend std::ostream& operator<<(std::ostream& os, const Course& course);
+	inline int getId() const { return id; }
+	inline int getCreditPoints() const { return creditPoints; }
+	inline std::string getName() const { return name; }
 };
 
 

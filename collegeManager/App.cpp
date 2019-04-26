@@ -47,13 +47,13 @@ int main(int argc, char** argv){
 	College* collegePtr = initFileParser.getCollege();
 
 	SimulationFileParser simulationFileParser(simulationFilename, collegePtr);
-	simulationFileParser.readFileAndExecute(errorMessage);
+	result = simulationFileParser.readFileAndExecute(errorMessage);
 	if (result == false) {
 		cout << "File " << simulationFilename << " is not found or is not in the correct format : \n" << errorMessage;
 		getchar();
 		return 0;
 	}
-	
+
 	//cout << "College name is " << collegePtr->getName();
 
 	//if (argc != NUM_OF_ARGUMENTS) {
@@ -64,37 +64,5 @@ int main(int argc, char** argv){
 	//cout << "argc = " << argc << endl;
 	getchar();
 
-	do{
-		SimulationFileParser::getOperationId()
-		switch (n)
-		{
-		case "1":
-			StimulationFileParser::operation1();
-			break;
-		case "2":
-			StimulationFileParser::operation2();
-			break;
-		case "3":
-			StimulationFileParser::operation3();
-			break;
-		case 4:
-			StimulationFileParser::operation4();
-			break;
-		case 5:
-			StimulationFileParser::operation5();
-			break;
-		case 6:
-			StimulationFileParser::operation6();
-			break;
-		case 7:
-			StimulationFileParser::operation7();
-			break;
-		case 8:
-			StimulationFileParser::operation8();
-			break;
-
-		default: // code to be executed if n doesn't match any cases
-		}
-	}
 	return 0;
 }

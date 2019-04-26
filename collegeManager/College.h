@@ -10,7 +10,7 @@ class College{
 private:
 	std::string name;
 	std::map<std::string, Department*> departments;
-	std::map<int, Course> allCourses;
+	std::map<int, Course*> allCourses;
 	std::list<StudentCycle> studentCycles;
 
 public:
@@ -18,6 +18,7 @@ public:
 	std::string getName() const;
 	bool addCourse(std::string departmentName, Course& course);
 	void addDepartment(Department* department);
+	Course* getCourseById(int courseId);
 };
 
 

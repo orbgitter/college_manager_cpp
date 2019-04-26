@@ -16,7 +16,12 @@ bool College::addCourse(std::string departmentName, Course& course) {
 		return false;
 	}
 	relevantDepartment->addCourse(course);
-	allCourses.insert(std::pair<int, Course>(course.getId(), course));
+	allCourses.insert(std::pair<int, Course*>(course.getId(), &course));
+
 
 	return true;
+}
+
+Course* College::getCourseById(int courseId) {
+	return allCourses[courseId];
 }
