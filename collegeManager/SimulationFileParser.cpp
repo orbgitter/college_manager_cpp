@@ -8,6 +8,7 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 	const int ADD_STUDENT_TO_COLLEGE = 1;
 	const int REGISTER_STUDENT_TO_COURSE = 2;
 	const int COMPLETE_COURSE = 3;
+	const int COMPLETE_COURSE_FOR_STUDENT = 4;
 	// ...
 	const int PRINT_STUDENT_CYCLE = 8;
 
@@ -108,7 +109,31 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 			coursePtr->completeCourse();
 
 			break;
-		case 4:
+		case COMPLETE_COURSE_FOR_STUDENT:
+			if (tokensForOneLine.size() != 3) {
+				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
+				continue;
+			}
+			studentId = tokensForOneLine[1];
+			courseId = stoi(tokensForOneLine[2]);
+
+			coursePtr = collegePtr->getCourseById(courseId);
+			if (coursePtr == NULL) {
+				cout << "Course is not found in college: " << courseId << endl;
+				continue;
+			}
+			studentPtr = collegePtr->getStudentById(studentId);
+			if (studentPtr == NULL) {
+				cout << "Student is not found in college: " << studentId << endl;
+				continue;
+			}
+			if (coursePtr->completeCourseForStudent(*studentPtr) == false) {
+				cout << "Student " << studentId << " is not found in this course: " << courseId << " - " << coursePtr->getName() << endl;
+			}
+			else {
+				cout << "Student " << studentId << " completed successfully the course " << courseId << " - " << coursePtr->getName() << endl;
+			}
+
 			break;
 		case 5:
 			break;

@@ -19,6 +19,7 @@ public:
 	inline std::string getName() const { return name; }
 	void registerStudent(Student& student);
 	void completeCourse();
+	bool completeCourseForStudent(Student& student);
 };
 
 

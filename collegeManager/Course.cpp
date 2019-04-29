@@ -28,3 +28,21 @@ void Course::completeCourse() {
 	}
 	students.clear();
 }
+
+bool Course::completeCourseForStudent(Student& student) {
+	
+	int index = -1;
+	for (int i = 0; i < students.size(); i++) {
+		if (students[i]->getId() == student.getId()) {
+			index = i;
+			break;
+		}
+	}
+	if (index == -1) {
+		return false;
+	}
+	student.addCreditPoints(creditPoints);
+	students.erase(students.begin() + index);
+
+	return true;
+}
