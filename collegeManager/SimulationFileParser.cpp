@@ -139,6 +139,10 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 				cout << "Student " << studentId << " is not found in this course: " << courseId << " - " << coursePtr->getName() << endl;
 			}
 			else {
+				if (studentPtr->isDegreed()) {
+					collegePtr->releaseStudent(studentPtr, true);
+					cout << "The student " << studentPtr->getId() << " - " << studentPtr->getFullName() << " has degreed!" << endl;
+				}
 				cout << "Student " << studentId << " completed successfully the course " << courseId << " - " << coursePtr->getName() << endl;
 			}
 
