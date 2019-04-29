@@ -7,7 +7,7 @@ class Department;
 
 class Student{
 private:
-	std::string firstName, lastName, address, id;
+	std::string firstName, lastName, address, id;	// Decided that id should be string because sometimes the id starts with 0
 	int collegeStartYear, totalCreditPoints;
 	Department* departmentPtr;
 
@@ -17,6 +17,7 @@ public:
 	// friend std::ostream& operator<<(std::ostream& os, const Student& student);
 	inline std::string getId() const { return id; }
 	inline std::string getFullName() const { return firstName + " " + lastName; }
+	inline int getCollegeStartYear() const { return collegeStartYear; }
 
 };
 

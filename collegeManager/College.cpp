@@ -8,7 +8,7 @@ void College::addDepartment(Department* department) {
 	departments.insert(std::pair<std::string, Department*>(department->getName(), department));
 }
 
-bool College::addCourse(std::string departmentName, Course& course) {
+bool College::addCourse(std::string departmentName, Course& course) { 
 
 	Department* relevantDepartment = departments[departmentName];
 
@@ -22,8 +22,33 @@ bool College::addCourse(std::string departmentName, Course& course) {
 	return true;
 }
 
+
+bool College::addStudent(Student& student, Department& department){
+	
+	int startYear = student.getCollegeStartYear();
+
+	StudentCycle* relevantStudentCyle = studentCycles[startYear];
+
+	if (relevantStudentCyle == NULL) {
+		relevantStudentCyle = new StudentCycle(startYear, 0);
+		
+		studentCycles.insert(std::pair<int, StudentCycle*>(startYear, relevantStudentCyle));
+	}
+
+	department.addStudent(student);
+	relevantStudentCyle->addStudent(student);
+
+	allStudents.insert(std::pair<std::string, Student*>(student.getId(), &student));
+
+	return true;
+}
+
 Course* College::getCourseById(int courseId) {
 	return allCourses[courseId];
+}
+
+Student* College::getStudentById(std::string studentId) {
+	return allStudents[studentId];
 }
 
 Department* College::getDepartmentByName(std::string name) {

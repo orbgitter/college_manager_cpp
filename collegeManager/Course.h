@@ -9,7 +9,7 @@ private:
 	std::string name;
 	int id;
 	int creditPoints;
-	std::vector<Student> students;
+	std::vector<Student*> students;
 
 public:
 	Course(int _id, std::string _name, int _creditPoints);
@@ -17,6 +17,7 @@ public:
 	inline int getId() const { return id; }
 	inline int getCreditPoints() const { return creditPoints; }
 	inline std::string getName() const { return name; }
+	void registerStudent(Student& student);
 };
 
 

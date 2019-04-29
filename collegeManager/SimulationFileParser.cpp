@@ -41,10 +41,11 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 
 		int operationId = std::stoi(tokensForOneLine[0], nullptr, 0);
 		cout << operationId << endl;
+
 		switch (operationId) {
 		case 1:
 			if (tokensForOneLine.size() != 7) {
-				cout << "Format for opeartion 1 is not correct:\n" << line << endl;
+				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
 				continue;
 			}
 			studentFirstName = tokensForOneLine[1];
@@ -61,15 +62,29 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 			}
 
 			studentPtr = new Student(studentFirstName, studentLastName, studentId, studentAddress, studentStartYear, departmentPtr);
-			departmentPtr->addStudent(*studentPtr);
-
-			// Find the relevant StudentCycle in college
-			// If it exists - add this student to this cycle
-			// Else - create a student cycle and add the student to this cycle
-			// Note: need to convert the student cycle list in college to Map: Key is the StartYear, Value is the StudentCycle
-
+			collegePtr->addStudent(*studentPtr, *departmentPtr);
+			
 			break;
-		case 2:
+		case 2: // Register a student to specific course
+			if (tokensForOneLine.size() != 3) {
+				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
+				continue;
+			}
+			studentId = tokensForOneLine[1];
+			courseId = stoi(tokensForOneLine[2]);
+
+			coursePtr = collegePtr->getCourseById(courseId);
+			if (coursePtr == NULL) {
+				cout << "Course is not found in college: " << courseId << endl;
+				continue;
+			}
+			studentPtr = collegePtr->getStudentById(studentId);
+			if (studentPtr == NULL) {
+				cout << "Student is not found in college: " << studentId << endl;
+				continue;
+			}
+			coursePtr->registerStudent(*studentPtr);
+
 			break;
 		case 3:
 			break;
