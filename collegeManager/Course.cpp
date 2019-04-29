@@ -21,18 +21,25 @@ void Course::registerStudent(Student& student) {
 	students.push_back(&student);
 }
 
-void Course::completeCourse() {
+std::vector<Student*> Course::completeCourse() {
 
-	for (int i = 0; i < students.size(); i++) {
+	std::vector<Student*> degreedStudents;
+
+	for (int i = 0; i < (int) students.size(); i++) {
 		students[i]->addCreditPoints(creditPoints);
+		if (students[i]->isDegreed()) {
+			degreedStudents.push_back(students[i]);
+		}
 	}
 	students.clear();
+
+	return degreedStudents;
 }
 
-bool Course::completeCourseForStudent(Student& student) {
+bool Course::completeCourseForStudent(Student& student, bool isCompletedSuccessfully) {
 	
 	int index = -1;
-	for (int i = 0; i < students.size(); i++) {
+	for (int i = 0; i < (int) students.size(); i++) {
 		if (students[i]->getId() == student.getId()) {
 			index = i;
 			break;
@@ -41,7 +48,9 @@ bool Course::completeCourseForStudent(Student& student) {
 	if (index == -1) {
 		return false;
 	}
-	student.addCreditPoints(creditPoints);
+	if (isCompletedSuccessfully) {
+		student.addCreditPoints(creditPoints);
+	}
 	students.erase(students.begin() + index);
 
 	return true;

@@ -23,6 +23,7 @@ public:
 	Course* getCourseById(int courseId);
 	Student* getStudentById(std::string studentId);
 	Department* getDepartmentByName(std::string name);
+	bool releaseStudent(Student* student, bool isCompleted);
 };
 
 

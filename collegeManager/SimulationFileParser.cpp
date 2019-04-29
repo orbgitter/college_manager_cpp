@@ -9,6 +9,8 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 	const int REGISTER_STUDENT_TO_COURSE = 2;
 	const int COMPLETE_COURSE = 3;
 	const int COMPLETE_COURSE_FOR_STUDENT = 4;
+	const int DELETE_STUDENT_FROM_COURSE = 5;
+	const int DELETE_STDUENT_FROM_COLLEGE = 6;
 	// ...
 	const int PRINT_STUDENT_CYCLE = 8;
 
@@ -19,11 +21,12 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 	bool result = true;
 
 	string line, token, studentFirstName, studentLastName, studentId, studentAddress, studentDepartmentName;
-	int currentIndex = 0, courseId = 0, studentStartYear = 0;
+	int currentIndex = 0, courseId = 0, studentStartYear = 0, excludedYear = 0;
 	const char delimiter = ',';
 	Course* coursePtr = NULL;
 	Department* departmentPtr = NULL;
 	Student* studentPtr = NULL;
+	vector<Student*> degreedStudents;
 	file.open(fileName);
 
 	while (getline(file, line)) {
@@ -106,7 +109,12 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 				cout << "Course is not found in college: " << courseId << endl;
 				continue;
 			}
-			coursePtr->completeCourse();
+			degreedStudents = coursePtr->completeCourse();
+
+			for (int i = 0; i < (int)degreedStudents.size(); i++) {
+				collegePtr->releaseStudent(degreedStudents[i], true);
+				cout << "The student " << degreedStudents[i]->getId() << " - " << degreedStudents[i]->getFullName() << " has degreed!" << endl;
+			}
 
 			break;
 		case COMPLETE_COURSE_FOR_STUDENT:
@@ -127,7 +135,7 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 				cout << "Student is not found in college: " << studentId << endl;
 				continue;
 			}
-			if (coursePtr->completeCourseForStudent(*studentPtr) == false) {
+			if (coursePtr->completeCourseForStudent(*studentPtr, true) == false) {
 				cout << "Student " << studentId << " is not found in this course: " << courseId << " - " << coursePtr->getName() << endl;
 			}
 			else {
@@ -135,11 +143,49 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 			}
 
 			break;
-		case 5:
+		case DELETE_STUDENT_FROM_COURSE:
+			if (tokensForOneLine.size() != 3) {
+				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
+				continue;
+			}
+			studentId = tokensForOneLine[1];
+			courseId = stoi(tokensForOneLine[2]);
+
+			coursePtr = collegePtr->getCourseById(courseId);
+			if (coursePtr == NULL) {
+				cout << "Course is not found in college: " << courseId << endl;
+				continue;
+			}
+			studentPtr = collegePtr->getStudentById(studentId);
+			if (studentPtr == NULL) {
+				cout << "Student is not found in college: " << studentId << endl;
+				continue;
+			}
+			if (coursePtr->completeCourseForStudent(*studentPtr, false) == false) {
+				cout << "Student " << studentId << " is not found in this course: " << courseId << " - " << coursePtr->getName() << endl;
+			}
+			else {
+				cout << "Student " << studentId << " removed from course " << courseId << " - " << coursePtr->getName() << " due to mismatch to academic requirements" << endl;
+			}
 			break;
-		case 6:
+		case DELETE_STDUENT_FROM_COLLEGE:
+			if (tokensForOneLine.size() != 3) {
+				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
+				continue;
+			}
+			studentId = tokensForOneLine[1];
+			excludedYear = stoi(tokensForOneLine[2]);
+
+			studentPtr = collegePtr->getStudentById(studentId);
+			if (studentPtr == NULL) {
+				cout << "Student is not found in college: " << studentId << endl;
+				continue;
+			}
+			// TODO & COMPLETE
+
 			break;
 		case 7:
+
 			break;
 		case PRINT_STUDENT_CYCLE:
 			if (tokensForOneLine.size() != 2) {

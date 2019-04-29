@@ -1,22 +1,18 @@
 #ifndef STUDENTCYCLE_H
 #define STUDENTCYCLE_H
 #include <iostream>
-#include <list>
+#include <vector>
 #include "Student.h"
 
 class StudentCycle{
 private:
-	int startYear, numOfInitialStudents;
-	std::list<Student> currentStudents;
-	std::list<int> studentCycles;
-
-
+	int startYear, totalStudents, numOfFailedStudents, numOfDegreedStudents;
+	std::vector<Student*> currentStudents;
 
 public:
-	StudentCycle(int _startYear, int numOfInitialStudents);
+	StudentCycle(int _startYear, int _totalStudents);
 	void addStudent(Student& student); //StudentCycle& studentCycle  ARGUMENET NEEDED ALSO ?//
+	bool removeStudent(Student& student, bool isDegreed);
 };
-
-
 
 #endif

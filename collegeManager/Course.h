@@ -18,8 +18,9 @@ public:
 	inline int getCreditPoints() const { return creditPoints; }
 	inline std::string getName() const { return name; }
 	void registerStudent(Student& student);
-	void completeCourse();
-	bool completeCourseForStudent(Student& student);
+	std::vector<Student*> completeCourse();
+	bool completeCourseForStudent(Student& student, bool isCompletedSuccessfully);
+	bool deleteStudent(Student& student, bool isCompletedCourse);
 };
 
 

@@ -54,3 +54,15 @@ Student* College::getStudentById(std::string studentId) {
 Department* College::getDepartmentByName(std::string name) {
 	return departments[name];
 }
+
+bool College::releaseStudent(Student* student, bool isCompleted) {
+
+	StudentCycle* studentCycle = studentCycles[student->getCollegeStartYear()];
+	if (studentCycle == NULL) {
+		return false;
+	}
+	studentCycle->removeStudent(*student, isCompleted);
+	//student->getDepartment()->removeStudent(*student);
+
+	return true;
+}
