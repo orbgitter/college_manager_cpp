@@ -20,3 +20,11 @@ std::ostream& operator<<(std::ostream& os, const Course& course){
 void Course::registerStudent(Student& student) {
 	students.push_back(&student);
 }
+
+void Course::completeCourse() {
+
+	for (int i = 0; i < students.size(); i++) {
+		students[i]->addCreditPoints(creditPoints);
+	}
+	students.clear();
+}

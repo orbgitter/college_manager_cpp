@@ -18,6 +18,7 @@ public:
 	inline int getCreditPoints() const { return creditPoints; }
 	inline std::string getName() const { return name; }
 	void registerStudent(Student& student);
+	void completeCourse();
 };
 
 

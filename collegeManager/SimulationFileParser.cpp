@@ -4,6 +4,14 @@ SimulationFileParser::SimulationFileParser(string _fileName, College* _collegePt
 
 bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 
+	// All The cases will be described here:
+	const int ADD_STUDENT_TO_COLLEGE = 1;
+	const int REGISTER_STUDENT_TO_COURSE = 2;
+	const int COMPLETE_COURSE = 3;
+	// ...
+	const int PRINT_STUDENT_CYCLE = 8;
+
+
 	cout << "Start reading simulation file\n";
 
 
@@ -43,7 +51,7 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 		cout << operationId << endl;
 
 		switch (operationId) {
-		case 1:
+		case ADD_STUDENT_TO_COLLEGE:
 			if (tokensForOneLine.size() != 7) {
 				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
 				continue;
@@ -65,7 +73,7 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 			collegePtr->addStudent(*studentPtr, *departmentPtr);
 			
 			break;
-		case 2: // Register a student to specific course
+		case REGISTER_STUDENT_TO_COURSE: // Register a student to specific course
 			if (tokensForOneLine.size() != 3) {
 				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
 				continue;
@@ -86,7 +94,19 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 			coursePtr->registerStudent(*studentPtr);
 
 			break;
-		case 3:
+		case COMPLETE_COURSE:
+			if (tokensForOneLine.size() != 2) {
+				cout << "Format for opeartion " << operationId << " is not correct : \n" << line << endl;
+				continue;
+			}
+			courseId = stoi(tokensForOneLine[1]);
+			coursePtr = collegePtr->getCourseById(courseId);
+			if (coursePtr == NULL) {
+				cout << "Course is not found in college: " << courseId << endl;
+				continue;
+			}
+			coursePtr->completeCourse();
+
 			break;
 		case 4:
 			break;
@@ -96,7 +116,7 @@ bool SimulationFileParser::readFileAndExecute(string& errorMessage) {
 			break;
 		case 7:
 			break;
-		case 8:
+		case PRINT_STUDENT_CYCLE:
 			if (tokensForOneLine.size() != 2) {
 				cout << "Format for opeartion 8 is not correct:\n" << line << endl;
 				continue;

@@ -18,7 +18,7 @@ public:
 	inline std::string getId() const { return id; }
 	inline std::string getFullName() const { return firstName + " " + lastName; }
 	inline int getCollegeStartYear() const { return collegeStartYear; }
-
+	inline void addCreditPoints(int pointsToAdd) { totalCreditPoints += pointsToAdd; }
 };
 
 
